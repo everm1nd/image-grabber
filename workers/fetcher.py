@@ -14,8 +14,8 @@ def fetch(url):
     if not os.path.isfile(hashname):
         try:
             instream = urllib.request.urlopen(url)
-        except urllib.error.HTTPError as error403:
-            print("Forbidden: {0}".format(error403))
+        except urllib.error.HTTPError as error:
+            print("HTTP Error: {0}".format(error), url)
             return
         output = open('./data/'+hashname, 'wb')
         output.write(instream.read())
