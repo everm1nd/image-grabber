@@ -10,6 +10,8 @@ def galleries_list(url):
 
 def grab(url):
     galleries = galleries_list(url)
+    print("Grabbed page: " + url)
     print("Found images:", len(galleries))
     for gallery in galleries:
         fetch(gallery)
+        print("Fetch: " + gallery)

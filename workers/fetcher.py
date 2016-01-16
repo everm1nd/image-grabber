@@ -19,7 +19,7 @@ def image_links(gallery):
 def fetch(gallery_url_template):
     for link in image_links(gallery_url_template):
         hashname = outhashname(link)
-        if not os.path.isfile(hashname):
+        if not os.path.isfile('data/' + hashname):
             try:
                 instream = urllib.request.urlopen(link)
             except urllib.error.HTTPError as error:
@@ -29,3 +29,5 @@ def fetch(gallery_url_template):
             output.write(instream.read())
             output.close()
             print("Downloaded: ", link)
+        else:
+            print("Duplicate. Ignoring")
