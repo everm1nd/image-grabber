@@ -9,15 +9,23 @@ def outname(url):
 def outhashname(url):
     return hashlib.sha256(url.encode('utf-8')).hexdigest()
 
-def fetch(url):
-    hashname = outhashname(url)
-    if not os.path.isfile(hashname):
-        try:
-            instream = urllib.request.urlopen(url)
-        except urllib.error.HTTPError as error:
-            print("HTTP Error: {0}".format(error), url)
-            return
-        output = open('./data/'+hashname, 'wb')
-        output.write(instream.read())
-        output.close()
-        print("Downloaded: ", url)
+def image_links(gallery):
+    links = []
+    regex = re.compile(r"{index}")
+    for i in range(0,16):
+        links.append(regex.sub(str(i+1), gallery))
+    return links
+
+def fetch(gallery_url_template):
+    for link in image_links(gallery_url_template):
+        hashname = outhashname(link)
+        if not os.path.isfile(hashname):
+            try:
+                instream = urllib.request.urlopen(link)
+            except urllib.error.HTTPError as error:
+                print("HTTP Error: {0}".format(error), link)
+                return
+            output = open('./data/'+hashname, 'wb')
+            output.write(instream.read())
+            output.close()
+            print("Downloaded: ", link)
