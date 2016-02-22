@@ -3,9 +3,6 @@ import re
 import hashlib
 import os.path
 
-def outname(url):
-    return re.compile('(?:.+\/)([^#?]+)').findall(url)[0]
-
 def outhashname(url):
     return hashlib.sha256(url.encode('utf-8')).hexdigest()
 
